@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="John T. Buynak" />
+
+<meta name="date" content="2018-12-02" />
+
+<title>Optionstrat</title>
+
+
+
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Optionstrat</h1>
+<h4 class="author"><em>John T. Buynak</em></h4>
+<h4 class="date"><em>2018-12-02</em></h4>
+
+
+
+<div id="package-info" class="section level2">
+<h2>1. Package Info</h2>
+<p>The <code>optionstrat</code> package provides full functionality for analyzing option greeks and option strategies. All option analytics are calculated using the Black-Scholes-Merton option pricing model.</p>
+</div>
+<div id="option-greek-calculations" class="section level2">
+<h2>2. Option Greek Calculations</h2>
+<p>The following functions may be used to calculate all of the option greeks as well as the option premium and provide the information in a <code>data.frame</code> format:</p>
+<ul>
+<li><code>opteval(s, x, sigma, t, r, d = 0)</code></li>
+<li><code>calleval(s, x, sigma, t, r, d = 0)</code></li>
+<li><code>puteval(s, x, sigma, t, r, d = 0)</code></li>
+</ul>
+<p>Alternatively, these functions will return a specific option greek:</p>
+<ul>
+<li><code>calldelta(s, x, sigma, t, r, d = 0)</code></li>
+<li><code>putdelta(s, x, sigma, t, r, d = 0)</code></li>
+<li><code>callgamma(s, x, sigma, t, r, d = 0)</code></li>
+<li><code>putgamma(s, x, sigma, t, r, d = 0)</code></li>
+<li><code>calltheta(s, x, sigma, t, r, d = 0)</code></li>
+<li><code>puttheta(s, x, sigma, t, r, d = 0)</code></li>
+<li><code>callrho(s, x, sigma, t, r, d = 0)</code></li>
+<li><code>putrho(s, x, sigma, t, r, d = 0)</code></li>
+<li><code>optiongamma(s, x, sigma, t, r, d = 0)</code></li>
+<li><code>optionrho(s, x, sigma, t, r, d = 0)</code></li>
+</ul>
+<p>Arguments:</p>
+<ul>
+<li><code>s</code> Spot price of the underlying asset</li>
+<li><code>x</code> Strike price of the option</li>
+<li><code>sigma</code> Annualized standard deviation of the underlying asset returns</li>
+<li><code>t</code> Time to expiration in years, use <code>tdiff(date1, date2, &quot;years&quot;)</code></li>
+<li><code>r</code> Continuously compounded risk-free rate, use <code>r.cont(r, n)</code></li>
+<li><code>d</code> Continuously compounded dividend yield, use <code>r.cont(r, n)</code></li>
+</ul>
+<p>Additionally:</p>
+<ul>
+<li><code>callgreek(greek = c(&quot;delta&quot;, &quot;gamma&quot;, &quot;theta&quot;, &quot;vega&quot;, &quot;rho&quot;, &quot;premium&quot;), s, x, sigma, t, r, d = 0))</code></li>
+<li><code>putgreek(greek = c(&quot;delta&quot;, &quot;gamma&quot;, &quot;theta&quot;, &quot;vega&quot;, &quot;rho&quot;, &quot;premium&quot;), s, x, sigma, t, r, d = 0))</code></li>
+</ul>
+<p>Arguments:</p>
+<ul>
+<li><code>greek</code> Character string. Specific option greek to be calculated</li>
+<li><code>s</code> Spot price of the underlying asset</li>
+<li><code>x</code> Strike price of the option</li>
+<li><code>sigma</code> Annualized standard deviation of the underlying asset returns</li>
+<li><code>t</code> Time to expiration in years, use <code>tdiff(date1, date2, &quot;years&quot;)</code></li>
+<li><code>r</code> Continuously compounded risk-free rate, use <code>r.cont(r, n)</code></li>
+<li><code>d</code> Continuously compounded dividend yield, use <code>r.cont(r, n)</code></li>
+</ul>
+</div>
+<div id="plot-option-strategies" class="section level2">
+<h2>3. Plot Option Strategies</h2>
+<p>The following functions may be used to plot specific option strategies:</p>
+<ul>
+<li><code>plotbullcall(s, x1, x2, t, r, sigma, sigma2 = sigma, d = 0, ll = 0.75, ul=1.25, xlab = &quot;spot&quot;, ylab = &quot;profit/loss&quot;, main = &quot;Bull Call Spread&quot;)</code></li>
+<li><code>plotbearcall(s, x1, x2, t, r, sigma, sigma2 = sigma, d = 0, ll = 0.75, ul=1.25, xlab = &quot;spot&quot;, ylab = &quot;profit/loss&quot;, main = &quot;Bear Call Spread&quot;)</code></li>
+<li><code>plotbullput(s, x1, x2, t, r, sigma, sigma2 = sigma, d = 0, ll = 0.75, ul=1.25, xlab = &quot;spot&quot;, ylab = &quot;profit/loss&quot;, main = &quot;Bull Put Spread&quot;)</code></li>
+<li><code>plotbearput(s, x1, x2, t, r, sigma, sigma2 = sigma, d = 0, ll = 0.75, ul=1.25, xlab = &quot;spot&quot;, ylab = &quot;profit/loss&quot;, main = &quot;Bear Put Spread&quot;)</code></li>
+</ul>
+<p>Arguments:</p>
+<ul>
+<li><code>s</code> Spot price of the underlying asset</li>
+<li><code>x1</code> Lower option strike price</li>
+<li><code>x2</code> Higher option strike price</li>
+<li><code>t</code> Years until expiration</li>
+<li><code>r</code> Annual continuously compounded risk-free rate</li>
+<li><code>sigma</code> Implied volatility of the lower option</li>
+<li><code>sigma2</code> Implied volatility of the higher option</li>
+<li><code>d</code> Annual continuously compounded dividend yield</li>
+<li><code>ll</code> lower limit of the plot, set in terms of percent of the spot (price/spot)</li>
+<li><code>ul</code> upper limit 0f the plot, set in terms of percent of the spot (price/spot)</li>
+</ul>
+<p>Additional plotting function:</p>
+<ul>
+<li><code>plotvertical(options = c(&quot;call&quot;, &quot;put&quot;), s, x1, x2, t, r, sigma, sigma2 = sigma, d = 0, ll = 0.75, ul = 1.25, xlab = &quot;spot&quot;, ylab = &quot;profit/loss&quot;, main = &quot;Vertical Spread&quot;)</code></li>
+</ul>
+<p>Arguments:</p>
+<ul>
+<li><code>options</code> Character string. Designate the type of both options</li>
+<li><code>s</code> Spot price of the underlying asset</li>
+<li><code>x1</code> Strike price of the short option in the vertical spread</li>
+<li><code>x2</code> Strike price of the long option in the vertical spread</li>
+<li><code>t</code> Years until expiration</li>
+<li><code>r</code> Annual continuously compounded risk-free rate</li>
+<li><code>sigma</code> Implied volatility of the short option</li>
+<li><code>sigma2</code> Implied volatility of the long option</li>
+<li><code>d</code> Annual continuously compounded dividend yield</li>
+<li><code>ll</code> lower limit of the plot, set in terms of percent of the spot (price/spot)</li>
+<li><code>ul</code> upper limit 0f the plot, set in terms of percent of the spot (price/spot)</li>
+</ul>
+<p>Additional plotting function:</p>
+<ul>
+<li><code>plotdv(s, x1, x2, x3, x4, t, r, sigma, sigma2 = sigma, sigma3 = sigma, sigma4 =sigma, d = 0, ll = 0.75, ul = 1.25, xlab = &quot;spot&quot;, ylab = &quot;Profit/Loss&quot;, main = &quot;Double Vertical Spread&quot;)</code></li>
+</ul>
+<p>Arguments:</p>
+<ul>
+<li><code>s</code> Spot price of the underlying asset</li>
+<li><code>x1</code> Strike price of the lower strike (long) put option</li>
+<li><code>x2</code> Strike price of the higher strike (short) put option</li>
+<li><code>x3</code> Strike price of the lower strike (short) call option</li>
+<li><code>x4</code> Strike price of the higher strike (long) call option<br />
+</li>
+<li><code>t</code> Years until expiration</li>
+<li><code>r</code> Annual continuously compounded risk-free rate</li>
+<li><code>sigma</code> Implied volatility of the lower strike (long) put option (annualized)</li>
+<li><code>sigma2</code> Implied volatility of the higher strike (short) put option (annualized)</li>
+<li><code>sigma3</code> Implied volatility of the lower strike (short) call option (annualized)</li>
+<li><code>sigma4</code> Implied volatility of the higher strike (long) call option (annualized)</li>
+<li><code>d</code> Annual continuously compounded dividend yield</li>
+<li><code>ll</code> lower limit of the plot, set in terms of percent of the spot (price/spot)</li>
+<li><code>ul</code> upper limit 0f the plot, set in terms of percent of the spot (price/spot)</li>
+</ul>
+</div>
+<div id="vertical-spread-analytics" class="section level2">
+<h2>4. Vertical Spread Analytics</h2>
+<p>Vertical Spread Analytics</p>
+<p>This function calculates the key analytics of a vertical spread and returns the ouput as a data.frame:</p>
+<ul>
+<li><code>vertical(options = c(&quot;call&quot;, &quot;put&quot;), s, x1, x2, t, r, sigma, sigma2 = sigma, vol = sigma, d = 0)</code></li>
+</ul>
+<p>Arguments:</p>
+<ul>
+<li><code>options</code> Character string, specify whether the spread is a call spread or put spread</li>
+<li><code>s</code> Spot price of the underlying asset</li>
+<li><code>x1</code> Strike price of the short option</li>
+<li><code>x2</code> Strike price of the long option</li>
+<li><code>t</code> Time to expiration in years</li>
+<li><code>r</code> Annual continuously compounded risk-free rate</li>
+<li><code>sigma</code> Implied volatility of the short option</li>
+<li><code>sigma2</code> Implied volatility of the long option, default = sigma</li>
+<li><code>vol</code> Input for the volatility of the underlying asset, default = sigma</li>
+<li><code>d</code> Annual continuously compounded dividend yield</li>
+</ul>
+<p>Details:</p>
+<ul>
+<li><code>options</code> = “call” , <code>(x1 &lt; x2)</code> : Bear Call Credit Spread</li>
+<li><code>options</code> = “call” , <code>(x1 &gt; x2)</code> : Bull Call Debit Spread</li>
+<li><code>options</code> = “put” , <code>(x1 &lt; x2)</code> : Bear Put Debit Spread</li>
+<li><code>options</code> = “put” , <code>(x1 &gt; x2)</code> : Bull Put Credit Spread</li>
+</ul>
+<p>Double Vertical Credit Spread Analytics</p>
+<p>This function calculates the key analytics of a double vertical credit spread and returns the output as a data.frame:</p>
+<ul>
+<li><code>dv(s, x1, x2, x3, x4, t, r, sigma, sigma2 = sigma, sigma3 = sigma, sigma4 = sigma, vol = sigma, d = 0)</code></li>
+</ul>
+<p>Arguments:</p>
+<ul>
+<li><code>s</code> Spot price of the underlying asset</li>
+<li><code>x1</code> Strike price of the lower strike (long) put option</li>
+<li><code>x2</code> Strike price of the higher strike (short) put option</li>
+<li><code>x3</code> Strike price of the lower strike (short) call option</li>
+<li><code>x4</code> Strike price of the higher strike (long) call option<br />
+</li>
+<li><code>t</code> Years until expiration</li>
+<li><code>r</code> Annual continuously compounded risk-free rate</li>
+<li><code>sigma</code> Implied volatility of the lower strike (long) put option (annualized)</li>
+<li><code>sigma2</code> Implied volatility of the higher strike (short) put option (annualized)</li>
+<li><code>sigma3</code> Implied volatility of the lower strike (short) call option (annualized)</li>
+<li><code>sigma4</code> Implied volatility of the higher strike (long) call option (annualized)</li>
+<li><code>vol</code> Input for the volatility of the underlying asset, default = sigma</li>
+<li><code>d</code> Annual continuously compounded dividend yield</li>
+</ul>
+</div>
+<div id="probability-functions" class="section level2">
+<h2>5. Probability Functions</h2>
+<p>The “Probability Below” function has two separate possible operations:</p>
+<ol style="list-style-type: decimal">
+<li>Calculates the probability of the underlying asset value remaining below a price level in a designated time frame, given the daily standard devaiation of the underlying returns.</li>
+<li>Calculates the price the asset will remain below, given the designated probability</li>
+</ol>
+<ul>
+<li><code>prob.below(spot, upper, mean = 0, dsd, dte, p, quantile = FALSE)</code></li>
+</ul>
+<p>Arguments:</p>
+<ul>
+<li><code>spot</code> Current price of the underlying asset</li>
+<li><code>lower</code> Lower price of the price range</li>
+<li><code>mean</code> The average daily price movement, default = 0</li>
+<li><code>dsd</code> Daily standard deviation of the underlying returns (Annual vol/sqrt(256))</li>
+<li><code>dte</code> Days until expiration, designated time frame</li>
+<li><code>p</code> Designated probability</li>
+<li><code>quantile</code> Logical. If True, calculates the price the asset will remain below, given the designated probability</li>
+</ul>
+<p>The “Probability Above” function has two separate possible operations:</p>
+<ol style="list-style-type: decimal">
+<li>Calculates the probability of the underlying asset value remaining above a price level in a designated time frame, given the daily standard devaiation of the underlying returns.</li>
+<li>Calculates the price the asset will remain above, given the designated probability</li>
+</ol>
+<ul>
+<li><code>prob.above(spot, lower, mean = 0, dsd, dte, p, quantile = FALSE)</code></li>
+</ul>
+<p>Arguments:</p>
+<ul>
+<li><code>spot</code> Current price of the underlying asset</li>
+<li><code>lower</code> Lower price of the range</li>
+<li><code>mean</code> The average daily price movement, default = 0</li>
+<li><code>dsd</code> Daily standard deviation of the underlying returns (Annual vol/sqrt(256))</li>
+<li><code>dte</code> Days until expiration, designated time frame</li>
+<li><code>p</code> Designated probability</li>
+<li><code>quantile</code> Logical. If True, calculates the price the asset will remain above, given the designated probability</li>
+</ul>
+<p>The “Probability Between”</p>
+<p>This function has two separate possible operations:</p>
+<ol style="list-style-type: decimal">
+<li>Calculates the probability of the underlying asset value falling between two prices in a designated time frame, given the daily standard devaiation of the underlying returns.</li>
+<li>Calculates the probable price range, given a set probability</li>
+</ol>
+<ul>
+<li><code>prob.btwn(spot, lower, upper, mean = 0, dsd, dte, p, quantile = FALSE)</code></li>
+</ul>
+<p>Arguments:</p>
+<ul>
+<li><code>spot</code> Current price of the underlying asset</li>
+<li><code>lower</code> Lower price of the price range</li>
+<li><code>upper</code> Upper price of the price range</li>
+<li><code>mean</code> The average daily price movement, default = 0</li>
+<li><code>dsd</code> Daily standard deviation of the underlying returns (Annual vol/sqrt(256))</li>
+<li><code>dte</code> Days until expiration, designated time frame</li>
+<li><code>p</code> Designated probability</li>
+<li><code>quantile</code> Logical. If True, calculates the price the asset will remain above, given the designated probability</li>
+</ul>
+</div>
+<div id="auxiliary-functions" class="section level2">
+<h2>6. Auxiliary Functions</h2>
+<p>The optionstrat package provides additional functions for calculating implied volatility estimations, numerical time differences, and converting a nominal rate into a continuously compounded rate.</p>
+<p>Implied Volatility (estimation):</p>
+<p><code>iv.est(C, S, t)</code></p>
+<p>Arguments:</p>
+<ul>
+<li><code>C</code> The price of a call option</li>
+<li><code>S</code> The spot price of the underlying asset</li>
+<li><code>t</code> Time to expiration (in years)</li>
+</ul>
+<p>Numerical Time Difference:</p>
+<ul>
+<li><code>tdiff(date1, date2, period = c(&quot;days&quot;, &quot;years&quot;))</code></li>
+</ul>
+<p>Continuously Compounded Rate Conversion:</p>
+<ul>
+<li><code>r.cont(r, n)</code></li>
+</ul>
+<p>Arguments:</p>
+<ul>
+<li><code>r</code> The nominal rate of interest</li>
+<li><code>n</code> The number of compounding periods in a year</li>
+</ul>
+</div>
+<div id="disclaimer" class="section level2">
+<h2>7. Disclaimer</h2>
+<p>The <code>optionstrat</code> package is provided free of charge to the general public. The indicators, strategies, calculations, functions and all other features are for educational purposes only and should not be construed as investment advice.</p>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

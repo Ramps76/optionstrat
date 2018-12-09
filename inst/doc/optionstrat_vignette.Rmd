@@ -1,0 +1,273 @@
+---
+title: "Optionstrat"
+author: "John T. Buynak"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{optionstrat}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+##1.  Package Info
+
+The `optionstrat` package provides full functionality for analyzing option greeks and option strategies.
+All option analytics are calculated using the Black-Scholes-Merton option pricing model.
+
+
+##2.  Option Greek Calculations
+
+The following functions may be used to calculate all of the option greeks as well as the option premium and provide the information in a `data.frame` format:
+
+- `opteval(s, x, sigma, t, r, d = 0)`
+- `calleval(s, x, sigma, t, r, d = 0)`
+- `puteval(s, x, sigma, t, r, d = 0)`
+
+Alternatively, these functions will return a specific option greek:
+
+- `calldelta(s, x, sigma, t, r, d = 0)`
+- `putdelta(s, x, sigma, t, r, d = 0)`
+- `callgamma(s, x, sigma, t, r, d = 0)`
+- `putgamma(s, x, sigma, t, r, d = 0)`
+- `calltheta(s, x, sigma, t, r, d = 0)`
+- `puttheta(s, x, sigma, t, r, d = 0)`
+- `callrho(s, x, sigma, t, r, d = 0)`
+- `putrho(s, x, sigma, t, r, d = 0)`
+- `optiongamma(s, x, sigma, t, r, d = 0)`
+- `optionrho(s, x, sigma, t, r, d = 0)`
+
+Arguments:
+
+- `s`     Spot price of the underlying asset
+- `x`     Strike price of the option
+- `sigma`     Annualized standard deviation of the underlying asset returns
+- `t`     Time to expiration in years, use `tdiff(date1, date2, "years")`
+- `r`     Continuously compounded risk-free rate, use `r.cont(r, n)`
+- `d`     Continuously compounded dividend yield, use `r.cont(r, n)`
+
+Additionally:
+
+- `callgreek(greek = c("delta", "gamma", "theta", "vega", "rho", "premium"), s, x, sigma, t, r, d = 0))`
+- `putgreek(greek = c("delta", "gamma", "theta", "vega", "rho", "premium"), s, x, sigma, t, r, d = 0))`
+                      
+Arguments:
+
+- `greek`    Character string. Specific option greek to be calculated
+- `s`     Spot price of the underlying asset
+- `x`     Strike price of the option
+- `sigma`    Annualized standard deviation of the underlying asset returns
+- `t`     Time to expiration in years, use `tdiff(date1, date2, "years")`
+- `r`     Continuously compounded risk-free rate, use `r.cont(r, n)`
+- `d`     Continuously compounded dividend yield, use `r.cont(r, n)`
+
+
+##3.  Plot Option Strategies
+
+The following functions may be used to plot specific option strategies:
+
+- `plotbullcall(s, x1, x2, t, r, sigma, sigma2 = sigma, d = 0, ll = 0.75, ul=1.25, xlab = "spot", ylab = "profit/loss", main = "Bull Call Spread")`
+- `plotbearcall(s, x1, x2, t, r, sigma, sigma2 = sigma, d = 0, ll = 0.75, ul=1.25, xlab = "spot", ylab = "profit/loss", main = "Bear Call Spread")`
+- `plotbullput(s, x1, x2, t, r, sigma, sigma2 = sigma, d = 0, ll = 0.75, ul=1.25, xlab = "spot", ylab = "profit/loss", main = "Bull Put Spread")`
+- `plotbearput(s, x1, x2, t, r, sigma, sigma2 = sigma, d = 0, ll = 0.75, ul=1.25, xlab = "spot", ylab = "profit/loss", main = "Bear Put Spread")`
+
+Arguments:
+
+- `s`    Spot price of the underlying asset
+- `x1`   Lower option strike price
+- `x2`   Higher option strike price
+- `t`    Years until expiration
+- `r`    Annual continuously compounded risk-free rate
+- `sigma`    Implied volatility of the lower option
+- `sigma2`   Implied volatility of the higher option
+- `d`    Annual continuously compounded dividend yield
+- `ll`   lower limit of the plot, set in terms of percent of the spot (price/spot)
+- `ul`   upper limit 0f the plot, set in terms of percent of the spot (price/spot)
+
+
+Additional plotting function:
+
+- `plotvertical(options = c("call", "put"), s, x1, x2, t, r, sigma, sigma2 = sigma, d = 0, ll = 0.75, ul = 1.25, xlab = "spot", ylab = "profit/loss", main = "Vertical Spread")`
+                          
+                          
+Arguments:
+
+- `options`     Character string. Designate the type of both options
+- `s`    Spot price of the underlying asset
+- `x1`   Strike price of the short option in the vertical spread
+- `x2`   Strike price of the long option in the vertical spread
+- `t`    Years until expiration
+- `r`    Annual continuously compounded risk-free rate
+- `sigma`    Implied volatility of the short option
+- `sigma2`   Implied volatility of the long option
+- `d`    Annual continuously compounded dividend yield
+- `ll`   lower limit of the plot, set in terms of percent of the spot (price/spot)
+- `ul`   upper limit 0f the plot, set in terms of percent of the spot (price/spot)
+
+Additional plotting function:
+
+- `plotdv(s, x1, x2, x3, x4, t, r, sigma, sigma2 = sigma, sigma3 = sigma, sigma4 =sigma, d = 0, ll = 0.75, ul = 1.25, xlab = "spot", ylab = "Profit/Loss", main = "Double Vertical Spread")`
+
+Arguments:
+
+- `s`    Spot price of the underlying asset
+- `x1` Strike price of the lower strike (long) put option
+- `x2` Strike price of the higher strike (short) put option
+- `x3` Strike price of the lower strike (short) call option
+- `x4` Strike price of the higher strike (long) call option  
+- `t`    Years until expiration
+- `r`    Annual continuously compounded risk-free rate
+- `sigma` Implied volatility of the lower strike (long) put option (annualized)
+- `sigma2` Implied volatility of the higher strike (short) put option (annualized)
+- `sigma3` Implied volatility of the lower strike (short) call option (annualized)
+- `sigma4` Implied volatility of the higher strike (long) call option (annualized)
+- `d`    Annual continuously compounded dividend yield
+- `ll`   lower limit of the plot, set in terms of percent of the spot (price/spot)
+- `ul`   upper limit 0f the plot, set in terms of percent of the spot (price/spot)
+
+##4. Vertical Spread Analytics
+
+Vertical Spread Analytics
+
+  This function calculates the key analytics of a vertical spread and returns the ouput as a data.frame:
+
+- `vertical(options = c("call", "put"), s, x1, x2, t, r, sigma, sigma2 = sigma, vol = sigma, d = 0)`
+
+Arguments: 
+
+- `options` Character string, specify whether the spread is a call spread or put spread
+- `s` Spot price of the underlying asset
+- `x1` Strike price of the short option
+- `x2` Strike price of the long option
+- `t` Time to expiration in years
+- `r` Annual continuously compounded risk-free rate
+- `sigma` Implied volatility of the short option
+- `sigma2` Implied volatility of the long option, default = sigma
+- `vol` Input for the volatility of the underlying asset, default = sigma
+- `d` Annual continuously compounded dividend yield
+
+Details:
+
+- `options` = "call" , `(x1 < x2)` : Bear Call Credit Spread
+- `options` = "call" , `(x1 > x2)` : Bull Call Debit Spread
+- `options` = "put" , `(x1 < x2)` : Bear Put Debit Spread
+- `options` = "put" , `(x1 > x2)` : Bull Put Credit Spread
+
+Double Vertical Credit Spread Analytics
+
+  This function calculates the key analytics of a double vertical credit spread and returns the output as a data.frame:
+
+- `dv(s, x1, x2, x3, x4, t, r, sigma, sigma2 = sigma, sigma3 = sigma, sigma4 = sigma, vol = sigma, d = 0)`
+
+Arguments:
+
+- `s`    Spot price of the underlying asset
+- `x1` Strike price of the lower strike (long) put option
+- `x2` Strike price of the higher strike (short) put option
+- `x3` Strike price of the lower strike (short) call option
+- `x4` Strike price of the higher strike (long) call option  
+- `t`    Years until expiration
+- `r`    Annual continuously compounded risk-free rate
+- `sigma` Implied volatility of the lower strike (long) put option (annualized)
+- `sigma2` Implied volatility of the higher strike (short) put option (annualized)
+- `sigma3` Implied volatility of the lower strike (short) call option (annualized)
+- `sigma4` Implied volatility of the higher strike (long) call option (annualized)
+- `vol` Input for the volatility of the underlying asset, default = sigma
+- `d`    Annual continuously compounded dividend yield
+
+##5. Probability Functions
+
+The "Probability Below" function has two separate possible operations:
+
+1. Calculates the probability of the underlying asset value remaining below a price level in a designated time frame, given the daily standard devaiation of the underlying returns.
+2. Calculates the price the asset will remain below, given the designated probability 
+
+- `prob.below(spot, upper, mean = 0, dsd, dte, p, quantile = FALSE)`
+
+Arguments:
+
+- `spot` Current price of the underlying asset
+- `lower` Lower price of the price range
+- `mean` The average daily price movement, default = 0
+- `dsd` Daily standard deviation of the underlying returns (Annual vol/sqrt(256))
+- `dte` Days until expiration, designated time frame
+- `p` Designated probability
+- `quantile` Logical. If True, calculates the price the asset will remain below, given the designated probability
+
+The "Probability Above" function has two separate possible operations:
+
+1. Calculates the probability of the underlying asset value remaining above a price level in a designated time frame, given the daily standard devaiation of the underlying returns.
+2. Calculates the price the asset will remain above, given the designated probability
+
+- `prob.above(spot, lower, mean = 0, dsd, dte, p, quantile = FALSE)`
+
+Arguments:
+
+- `spot` Current price of the underlying asset
+- `lower` Lower price of the range
+- `mean` The average daily price movement, default = 0
+- `dsd` Daily standard deviation of the underlying returns (Annual vol/sqrt(256))
+- `dte` Days until expiration, designated time frame
+- `p` Designated probability
+- `quantile` Logical. If True, calculates the price the asset will remain above, given the designated probability
+
+The "Probability Between"
+
+This function has two separate possible operations:
+
+1. Calculates the probability of the underlying asset value falling between two prices in a designated time frame, given the daily standard devaiation of the underlying returns.
+2. Calculates the probable price range, given a set probability
+
+- `prob.btwn(spot, lower, upper, mean = 0, dsd, dte, p, quantile = FALSE)`
+
+Arguments:
+
+- `spot` Current price of the underlying asset
+- `lower` Lower price of the price range
+- `upper` Upper price of the price range
+- `mean` The average daily price movement, default = 0
+- `dsd` Daily standard deviation of the underlying returns (Annual vol/sqrt(256))
+- `dte` Days until expiration, designated time frame
+- `p` Designated probability
+- `quantile` Logical. If True, calculates the price the asset will remain above, given the designated probability
+
+##6.  Auxiliary Functions
+
+The optionstrat package provides additional functions for calculating implied volatility estimations, numerical time differences, and converting a nominal rate into a continuously compounded rate.
+
+Implied Volatility (estimation):
+
+`iv.est(C, S, t)`
+
+Arguments:
+
+- `C`  The price of a call option
+- `S`  The spot price of the underlying asset
+- `t`  Time to expiration (in years)
+
+Numerical Time Difference:
+
+- `tdiff(date1, date2, period = c("days", "years"))`
+
+Continuously Compounded Rate Conversion:
+
+- `r.cont(r, n)`
+
+Arguments:
+
+- `r`  The nominal rate of interest
+- `n`  The number of compounding periods in a year
+
+##7. Disclaimer
+
+The `optionstrat` package is provided free of charge to the general public.
+The indicators, strategies, calculations, functions and all other features are for educational purposes only and should not be construed as investment advice.
+
+
