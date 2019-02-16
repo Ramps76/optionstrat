@@ -2,7 +2,7 @@
 % Please edit documentation in R/hello.R
 \name{plotvertical}
 \alias{plotvertical}
-\title{Plot Custum Vertical Spread}
+\title{Plot Custom Vertical Spread}
 \usage{
 plotvertical(options = c("call", "put"), s, x1, x2, t, r, sigma,
   sigma2 = sigma, d = 0, ll = 0.75, ul = 1.25, xlab = "spot",
@@ -44,7 +44,7 @@ Red line: The profit(loss) at (1/2) time "t" ~ half-way to expiration.
 Blue line: The profit(loss) at inception.
 }
 \description{
-Plot Custum Vertical Spread
+Plot Custom Vertical Spread
 }
 \examples{
 plotvertical("call", 100, 90, 110, (45/365), 0.02, 0.20)

@@ -31,7 +31,7 @@ Returns a data.frame containing the call and put option premium and greeks:
 }
 }
 \description{
-Creates a data.frame containing both call and put option greeks; delta, gamma, vega, theta, rho as well as the call premium
+Creates a data.frame containing both call and put option greeks; delta, gamma, vega, theta, rho and the option premium
 }
 \examples{
 opteval(100, 100, 0.20, (45/365), 0.02, 0.02)

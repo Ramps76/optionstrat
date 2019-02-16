@@ -31,7 +31,7 @@ Returns a data.frame containing the option premium and greeks:
 }
 }
 \description{
-Creates a data.frame containing call option greeks; delta, gamma, vega, theta, rho as well as the call premium
+Creates a data.frame containing call option greeks; delta, gamma, vega, theta, rho and the call premium
 }
 \examples{
 calleval(100, 100, 0.20, (45/365), 0.02, 0.02)

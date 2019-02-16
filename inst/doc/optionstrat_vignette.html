@@ -12,7 +12,7 @@
 
 <meta name="author" content="John T. Buynak" />
 
-<meta name="date" content="2018-12-02" />
+<meta name="date" content="2019-02-16" />
 
 <title>Optionstrat</title>
 
@@ -32,16 +32,16 @@
 
 <h1 class="title toc-ignore">Optionstrat</h1>
 <h4 class="author"><em>John T. Buynak</em></h4>
-<h4 class="date"><em>2018-12-02</em></h4>
+<h4 class="date"><em>2019-02-16</em></h4>
 
 
 
 <div id="package-info" class="section level2">
-<h2>1. Package Info</h2>
+<h2>Package Info</h2>
 <p>The <code>optionstrat</code> package provides full functionality for analyzing option greeks and option strategies. All option analytics are calculated using the Black-Scholes-Merton option pricing model.</p>
 </div>
 <div id="option-greek-calculations" class="section level2">
-<h2>2. Option Greek Calculations</h2>
+<h2>1. Option Greek Calculations</h2>
 <p>The following functions may be used to calculate all of the option greeks as well as the option premium and provide the information in a <code>data.frame</code> format:</p>
 <ul>
 <li><code>opteval(s, x, sigma, t, r, d = 0)</code></li>
@@ -87,7 +87,7 @@
 </ul>
 </div>
 <div id="plot-option-strategies" class="section level2">
-<h2>3. Plot Option Strategies</h2>
+<h2>2. Plot Option Strategies</h2>
 <p>The following functions may be used to plot specific option strategies:</p>
 <ul>
 <li><code>plotbullcall(s, x1, x2, t, r, sigma, sigma2 = sigma, d = 0, ll = 0.75, ul=1.25, xlab = &quot;spot&quot;, ylab = &quot;profit/loss&quot;, main = &quot;Bull Call Spread&quot;)</code></li>
@@ -150,7 +150,7 @@
 </ul>
 </div>
 <div id="vertical-spread-analytics" class="section level2">
-<h2>4. Vertical Spread Analytics</h2>
+<h2>3. Vertical Spread Analytics</h2>
 <p>Vertical Spread Analytics</p>
 <p>This function calculates the key analytics of a vertical spread and returns the ouput as a data.frame:</p>
 <ul>
@@ -200,7 +200,7 @@
 </ul>
 </div>
 <div id="probability-functions" class="section level2">
-<h2>5. Probability Functions</h2>
+<h2>4. Probability Functions</h2>
 <p>The “Probability Below” function has two separate possible operations:</p>
 <ol style="list-style-type: decimal">
 <li>Calculates the probability of the underlying asset value remaining below a price level in a designated time frame, given the daily standard devaiation of the underlying returns.</li>
@@ -259,15 +259,21 @@
 </ul>
 </div>
 <div id="auxiliary-functions" class="section level2">
-<h2>6. Auxiliary Functions</h2>
-<p>The optionstrat package provides additional functions for calculating implied volatility estimations, numerical time differences, and converting a nominal rate into a continuously compounded rate.</p>
-<p>Implied Volatility (estimation):</p>
-<p><code>iv.est(C, S, t)</code></p>
+<h2>5. Auxiliary Functions</h2>
+<p>The optionstrat package provides additional functions for calculating the implied volatility of either a call or put option, numerical time differences, and converting a nominal rate into a continuously compounded rate.</p>
+<p>Implied Volatility:</p>
+<p><code>iv.calc(type, price, s, x, t, r, d=0)</code></p>
+<p>When applying this function over the rows of a dataframe, run it iteratively:</p>
+<p><code>for(i in 1:nrow(dataframe)){   dataframe$iv[i] &lt;- iv.calc(type = &quot;put&quot;, price = dataframe$putprice[i],                             s = atm, x = dataframe$strike[i], t = ttm, r = rate) }</code></p>
 <p>Arguments:</p>
 <ul>
-<li><code>C</code> The price of a call option</li>
-<li><code>S</code> The spot price of the underlying asset</li>
+<li><code>type</code> The type of option, either “call” or “put”</li>
+<li><code>price</code> The option premium</li>
+<li><code>s</code> The spot price of the underlying asset</li>
+<li><code>x</code> The strike price of the option</li>
 <li><code>t</code> Time to expiration (in years)</li>
+<li><code>r</code> The continuously-compounded risk-free rate</li>
+<li><code>d</code> The dividend yield of the underlying asset</li>
 </ul>
 <p>Numerical Time Difference:</p>
 <ul>
@@ -282,10 +288,10 @@
 <li><code>r</code> The nominal rate of interest</li>
 <li><code>n</code> The number of compounding periods in a year</li>
 </ul>
-</div>
-<div id="disclaimer" class="section level2">
-<h2>7. Disclaimer</h2>
+<div id="disclaimer" class="section level3">
+<h3>Disclaimer</h3>
 <p>The <code>optionstrat</code> package is provided free of charge to the general public. The indicators, strategies, calculations, functions and all other features are for educational purposes only and should not be construed as investment advice.</p>
+</div>
 </div>
 
 

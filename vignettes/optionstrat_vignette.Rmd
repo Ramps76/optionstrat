@@ -17,13 +17,13 @@ knitr::opts_chunk$set(
 ```
 
 
-##1.  Package Info
+##  Package Info
 
 The `optionstrat` package provides full functionality for analyzing option greeks and option strategies.
 All option analytics are calculated using the Black-Scholes-Merton option pricing model.
 
 
-##2.  Option Greek Calculations
+##1.  Option Greek Calculations
 
 The following functions may be used to calculate all of the option greeks as well as the option premium and provide the information in a `data.frame` format:
 
@@ -69,7 +69,7 @@ Arguments:
 - `d`     Continuously compounded dividend yield, use `r.cont(r, n)`
 
 
-##3.  Plot Option Strategies
+##2.  Plot Option Strategies
 
 The following functions may be used to plot specific option strategies:
 
@@ -132,7 +132,7 @@ Arguments:
 - `ll`   lower limit of the plot, set in terms of percent of the spot (price/spot)
 - `ul`   upper limit 0f the plot, set in terms of percent of the spot (price/spot)
 
-##4. Vertical Spread Analytics
+##3. Vertical Spread Analytics
 
 Vertical Spread Analytics
 
@@ -182,7 +182,7 @@ Arguments:
 - `vol` Input for the volatility of the underlying asset, default = sigma
 - `d`    Annual continuously compounded dividend yield
 
-##5. Probability Functions
+##4. Probability Functions
 
 The "Probability Below" function has two separate possible operations:
 
@@ -238,19 +238,30 @@ Arguments:
 - `p` Designated probability
 - `quantile` Logical. If True, calculates the price the asset will remain above, given the designated probability
 
-##6.  Auxiliary Functions
+##5.  Auxiliary Functions
 
-The optionstrat package provides additional functions for calculating implied volatility estimations, numerical time differences, and converting a nominal rate into a continuously compounded rate.
+The optionstrat package provides additional functions for calculating the implied volatility of either a call or put option, numerical time differences, and converting a nominal rate into a continuously compounded rate.
 
-Implied Volatility (estimation):
+Implied Volatility:
 
-`iv.est(C, S, t)`
+`iv.calc(type, price, s, x, t, r, d=0)`
+
+When applying this function over the rows of a dataframe, run it iteratively:
+
+`for(i in 1:nrow(dataframe)){
+  dataframe$iv[i] <- iv.calc(type = "put", price = dataframe$putprice[i],
+                            s = atm, x = dataframe$strike[i], t = ttm, r = rate)
+}`
 
 Arguments:
 
-- `C`  The price of a call option
-- `S`  The spot price of the underlying asset
+- `type`  The type of option, either "call" or "put"
+- `price`  The option premium
+- `s` The spot price of the underlying asset
+- `x` The strike price of the option
 - `t`  Time to expiration (in years)
+- `r` The continuously-compounded risk-free rate 
+- `d` The dividend yield of the underlying asset
 
 Numerical Time Difference:
 
@@ -265,7 +276,7 @@ Arguments:
 - `r`  The nominal rate of interest
 - `n`  The number of compounding periods in a year
 
-##7. Disclaimer
+### Disclaimer
 
 The `optionstrat` package is provided free of charge to the general public.
 The indicators, strategies, calculations, functions and all other features are for educational purposes only and should not be construed as investment advice.
