@@ -43,6 +43,7 @@ Alternatively, these functions will return a specific option greek:
 - `putrho(s, x, sigma, t, r, d = 0)`
 - `optiongamma(s, x, sigma, t, r, d = 0)`
 - `optionrho(s, x, sigma, t, r, d = 0)`
+- `lambda(type = "call", s, x, sigma, t, r, d = 0)`
 
 Arguments:
 

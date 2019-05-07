@@ -1,4 +1,5 @@
 
+
 #' Call Premium
 #'
 #' Calculates the premium of a European-style call option using the Black-Scholes option pricing model
@@ -498,19 +499,19 @@ callgreek <- function(greek = c("delta", "gamma", "theta", "vega", "rho", "premi
     stop("The greek argument must be a character string!", call. = FALSE)
   }else{
 
-  if(greek == "delta"){
-    calldelta(s, x, sigma, t, r, d)
-  }else if(greek == "gamma") {
-    optiongamma(s, x, sigma, t, r, d)
-  } else if(greek == "vega"){
-    optionvega(s, x, sigma, t, r, d)
-  } else if(greek == "theta") {
-    calltheta(s, x, sigma, t, r, d)
-  }else if(greek == "rho"){
-    callrho(s, x, sigma, t, r, d)
-  }else if(greek=="premium"){
-    callpremium(s, x, sigma, t, r, d)
-  }
+    if(greek == "delta"){
+      calldelta(s, x, sigma, t, r, d)
+    }else if(greek == "gamma") {
+      optiongamma(s, x, sigma, t, r, d)
+    } else if(greek == "vega"){
+      optionvega(s, x, sigma, t, r, d)
+    } else if(greek == "theta") {
+      calltheta(s, x, sigma, t, r, d)
+    }else if(greek == "rho"){
+      callrho(s, x, sigma, t, r, d)
+    }else if(greek=="premium"){
+      callpremium(s, x, sigma, t, r, d)
+    }
   }
 }
 
@@ -546,19 +547,19 @@ putgreek <- function(greek = c("delta", "gamma", "theta", "vega", "rho", "premiu
     stop("The greek argument must be a character string!", call. = FALSE)
   }else{
 
-  if(greek == "delta"){
-    putdelta(s, x, sigma, t, r, d)
-  }else if(greek == "gamma") {
-    optiongamma(s, x, sigma, t, r, d)
-  } else if(greek == "vega"){
-    optionvega(s, x, sigma, t, r, d)
-  } else if(greek == "theta") {
-    puttheta(s, x, sigma, t, r, d)
-  }else if(greek == "rho"){
-    putrho(s, x, sigma, t, r, d)
-  }else if(greek=="premium"){
-    putpremium(s, x, sigma, t, r, d)
-  }
+    if(greek == "delta"){
+      putdelta(s, x, sigma, t, r, d)
+    }else if(greek == "gamma") {
+      optiongamma(s, x, sigma, t, r, d)
+    } else if(greek == "vega"){
+      optionvega(s, x, sigma, t, r, d)
+    } else if(greek == "theta") {
+      puttheta(s, x, sigma, t, r, d)
+    }else if(greek == "rho"){
+      putrho(s, x, sigma, t, r, d)
+    }else if(greek=="premium"){
+      putpremium(s, x, sigma, t, r, d)
+    }
   }
 }
 
@@ -695,13 +696,13 @@ prob.above <- function(spot, lower, mean = 0, dsd, dte, p, quantile = FALSE) {
     data.frame("probability" = p, "percent change" = tprob, "price" = spot * (1+ tprob))
   }else {
 
-  xsd <- dsd * sqrt(dte)
+    xsd <- dsd * sqrt(dte)
 
-  lower.pc <- (lower - spot)/spot
+    lower.pc <- (lower - spot)/spot
 
-  plower <- pnorm(lower.pc, 0, xsd)
+    plower <- pnorm(lower.pc, 0, xsd)
 
-  1 - as.numeric(plower)
+    1 - as.numeric(plower)
   }
 }
 
@@ -777,7 +778,7 @@ r.cont <- function(r, n) {
 #' @examples plotbullcall(s= 100, x1 = 95, x2 = 105, t = (45/365), r = 0.02,
 #' sigma = 0.20, sigma2 = 0.20, d = 0, ll = 0.75, ul = 1.25)
 plotbullcall <- function(s, x1, x2, t, r, sigma, sigma2 = sigma, d = 0, ll = 0.75, ul=1.25,
-                          xlab = "spot", ylab = "profit/loss", main = "Bull Call Spread") {
+                         xlab = "spot", ylab = "profit/loss", main = "Bull Call Spread") {
   ttm <- t
   if(t == 0){
     ttm <- 1e-200
@@ -844,7 +845,7 @@ plotbullcall <- function(s, x1, x2, t, r, sigma, sigma2 = sigma, d = 0, ll = 0.7
 #' @examples plotbearcall(s= 100, x1 = 95, x2 = 105, t = (45/365), r = 0.02,
 #' sigma = 0.20, sigma2 = 0.20, d = 0, ll = 0.75, ul = 1.25)
 plotbearcall <- function(s, x1, x2, t, r, sigma, sigma2 = sigma,  d = 0, ll = 0.75, ul=1.25,
-                          xlab = "spot", ylab = "Profit/Loss", main = "Bear Call Spread") {
+                         xlab = "spot", ylab = "Profit/Loss", main = "Bear Call Spread") {
   ttm <- t
   if(t == 0){
     ttm <- 1e-200
@@ -911,7 +912,7 @@ plotbearcall <- function(s, x1, x2, t, r, sigma, sigma2 = sigma,  d = 0, ll = 0.
 #' @examples plotbullput(s= 100, x1 = 95, x2 = 105, t = (45/365), r = 0.02,
 #' sigma = 0.20, sigma2 = 0.20, d = 0, ll = 0.75, ul = 1.25)
 plotbullput <- function(s, x1, x2, t, r, d = 0, sigma, sigma2 = sigma, ll = 0.75, ul = 1.25,
-                         xlab = "spot", ylab = "Profit/Loss", main = "Bull Put Spread") {
+                        xlab = "spot", ylab = "Profit/Loss", main = "Bull Put Spread") {
   ttm <- t
   if(t == 0){
     ttm <- 1e-200
@@ -978,7 +979,7 @@ plotbullput <- function(s, x1, x2, t, r, d = 0, sigma, sigma2 = sigma, ll = 0.75
 #' @examples plotbearput(s= 100, x1 = 95, x2 = 105, t = (45/365), r = 0.02,
 #' sigma = 0.20, sigma2 = 0.20, d = 0, ll = 0.75, ul = 1.25)
 plotbearput <- function(s, x1, x2, t, r, sigma, sigma2 = sigma, d = 0, ll = 0.75, ul = 1.25,
-                         xlab = "spot", ylab = "Profit/Loss", main = "Bear Put Spread") {
+                        xlab = "spot", ylab = "Profit/Loss", main = "Bear Put Spread") {
   ttm <- t
   if(t == 0){
     ttm <- 1e-200
@@ -1050,8 +1051,8 @@ plotbearput <- function(s, x1, x2, t, r, sigma, sigma2 = sigma, d = 0, ll = 0.75
 #'
 #' @examples plotdv(s= 100, x1 = 90, x2 = 95, x3 = 105, x4 = 110, t = (45/365), r = 0.02, sigma = 0.20)
 plotdv <- function(s, x1, x2, x3, x4, t, r, sigma, sigma2 = sigma, sigma3 = sigma, sigma4 =sigma,
-                  d = 0, ll = 0.75, ul = 1.25,
-                  xlab = "spot", ylab = "Profit/Loss", main = "Double Vertical Spread") {
+                   d = 0, ll = 0.75, ul = 1.25,
+                   xlab = "spot", ylab = "Profit/Loss", main = "Double Vertical Spread") {
 
   ttm <- t
   if(t == 0){
@@ -1133,8 +1134,8 @@ plotdv <- function(s, x1, x2, x3, x4, t, r, sigma, sigma2 = sigma, sigma3 = sigm
 #'
 #' @examples plotvertical("call", 100, 90, 110, (45/365), 0.02, 0.20)
 plotvertical <- function(options = c("call", "put"), s, x1, x2,
-                          t, r, sigma, sigma2 = sigma, d = 0, ll = 0.75, ul = 1.25,
-                          xlab = "spot", ylab = "profit/loss", main = "Vertical Spread") {
+                         t, r, sigma, sigma2 = sigma, d = 0, ll = 0.75, ul = 1.25,
+                         xlab = "spot", ylab = "profit/loss", main = "Vertical Spread") {
   ttm <- t
   if(t == 0){
     ttm <- 1e-200
@@ -1148,47 +1149,47 @@ plotvertical <- function(options = c("call", "put"), s, x1, x2,
     stop("The options argument must be a character string!", call. = FALSE)
   }else{
 
-  if(options == "put") {
-    vert <- data.frame(spot = c((s*ll):(s*ul)))
+    if(options == "put") {
+      vert <- data.frame(spot = c((s*ll):(s*ul)))
 
-    vert$exp <- ((putpremium(vert$spot, x2, sigma2, t = 1e-5, r) -
-                    putpremium(vert$spot, x1, sigma, t = 1e-5, r)) -
-                   putpremium(s, x2, sigma2, t, r) +
-                   putpremium(s, x1, sigma, t, r))
-
-    vert$half <- ((putpremium(vert$spot, x2, sigma2, t*0.5, r) -
-                     putpremium(vert$spot, x1, sigma, t*0.5, r)) -
-                    putpremium(s, x2, sigma2, t, r) +
-                    putpremium(s, x1, sigma, t, r))
-
-    vert$begin <- ((putpremium(vert$spot, x2, sigma2, t, r) -
-                      putpremium(vert$spot, x1, sigma, t, r)) -
+      vert$exp <- ((putpremium(vert$spot, x2, sigma2, t = 1e-5, r) -
+                      putpremium(vert$spot, x1, sigma, t = 1e-5, r)) -
                      putpremium(s, x2, sigma2, t, r) +
                      putpremium(s, x1, sigma, t, r))
 
+      vert$half <- ((putpremium(vert$spot, x2, sigma2, t*0.5, r) -
+                       putpremium(vert$spot, x1, sigma, t*0.5, r)) -
+                      putpremium(s, x2, sigma2, t, r) +
+                      putpremium(s, x1, sigma, t, r))
 
-  }
+      vert$begin <- ((putpremium(vert$spot, x2, sigma2, t, r) -
+                        putpremium(vert$spot, x1, sigma, t, r)) -
+                       putpremium(s, x2, sigma2, t, r) +
+                       putpremium(s, x1, sigma, t, r))
 
-  else {
-    vert <- data.frame(spot = c((s*ll):(s*ul)))
 
-    vert$exp <- ((callpremium(vert$spot, x2, sigma2, t = 1e-5, r) -
-                    callpremium(vert$spot, x1, sigma, t = 1e-5, r)) -
-                   callpremium(s, x2, sigma2, t, r) +
-                   callpremium(s, x1, sigma, t, r))
+    }
 
-    vert$half <- ((callpremium(vert$spot, x2, sigma2, t*0.5, r) -
-                     callpremium(vert$spot, x1, sigma, t*0.5, r)) -
-                    callpremium(s, x2, sigma2, t, r) +
-                    callpremium(s, x1, sigma, t, r))
+    else {
+      vert <- data.frame(spot = c((s*ll):(s*ul)))
 
-    vert$begin <- ((callpremium(vert$spot, x2, sigma2, t, r) -
-                      callpremium(vert$spot, x1, sigma, t, r)) -
+      vert$exp <- ((callpremium(vert$spot, x2, sigma2, t = 1e-5, r) -
+                      callpremium(vert$spot, x1, sigma, t = 1e-5, r)) -
                      callpremium(s, x2, sigma2, t, r) +
                      callpremium(s, x1, sigma, t, r))
 
+      vert$half <- ((callpremium(vert$spot, x2, sigma2, t*0.5, r) -
+                       callpremium(vert$spot, x1, sigma, t*0.5, r)) -
+                      callpremium(s, x2, sigma2, t, r) +
+                      callpremium(s, x1, sigma, t, r))
+
+      vert$begin <- ((callpremium(vert$spot, x2, sigma2, t, r) -
+                        callpremium(vert$spot, x1, sigma, t, r)) -
+                       callpremium(s, x2, sigma2, t, r) +
+                       callpremium(s, x1, sigma, t, r))
+
+    }
   }
-}
   par(mfrow = c(1,1))
   plot(vert$spot, vert$exp, type = "l", xlab = xlab, ylab = ylab, main = main) # first plot
   abline("h" = 0)
@@ -1403,5 +1404,37 @@ iv.calc <- function(type, price, s, x, t, r, d=0) {
 
 
   volchart$vol[match(min(abs(volchart$distance)), abs(volchart$distance))]
+
+}
+
+
+#' Lambda
+#'
+#' Calculates the Lambda of the call or put option
+#'
+#' Lambda, or elasticity is the percentage change in the option valueper percentage change in the underlying price. It is a measure of leverage.
+#'
+#' @param type Character string, either "call" or "put"
+#' @param s Spot price of the underlying asset
+#' @param x Strike price of the option
+#' @param sigma Implied volatility of the underlying asset price, defined as the annualized standard deviation of the asset returns
+#' @param t Time to maturity in years
+#' @param r Annual continuously-compounded risk-free rate, use the function r.cont
+#' @param d Annual continuously-compounded dividend yield, use the function r.cont
+#'
+#' @return Calculates the Lambda of the option contract
+#' @export
+#'
+#' @examples lambda(type = "put", s = 100, x = 100, sigma = 0.15, t = 45/365, r = 0.02)
+lambda <- function(type = "call", s, x, sigma, t, r, d = 0){
+
+  if(type == "call"){
+    calldelta(s = s, x = x, t = t, sigma = sigma, r =r, d = d) *
+      ( s/callpremium(s = s, x = x, t = t, sigma = sigma, r =r, d = d))
+  }else{
+
+    putdelta(s = s, x = x, t = t, sigma = sigma, r =r, d = d) *
+      ( s/putpremium(s = s, x = x, t = t, sigma = sigma, r =r, d = d))
+  }
 
 }
