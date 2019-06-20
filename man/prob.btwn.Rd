@@ -4,7 +4,8 @@
 \alias{prob.btwn}
 \title{Probability Between}
 \usage{
-prob.btwn(spot, lower, upper, mean = 0, dsd, dte, p, quantile = FALSE)
+prob.btwn(spot, lower, upper, asd = 0, dsd = 0, dte = 0, mean = 0,
+  p, quantile = FALSE)
 }
 \arguments{
 \item{spot}{Current price of the underlying asset}
@@ -13,11 +14,13 @@ prob.btwn(spot, lower, upper, mean = 0, dsd, dte, p, quantile = FALSE)
 
 \item{upper}{Upper price of the range}
 
-\item{mean}{The average daily price movement, default = 0}
+\item{asd}{Annualized standard deviation of the underlying returns}
 
-\item{dsd}{Daily standard deviation of the underlying returns (Annual vol/sqrt(256))}
+\item{dsd}{Daily standard deviation of the underlying returns (Annual vol/sqrt(256)), used as an alternative to the asd parameter in conjuction with the dte parameter}
 
 \item{dte}{Days until expiration, designated time frame}
+
+\item{mean}{The average daily price movement, default = 0}
 
 \item{p}{Designated probability}
 

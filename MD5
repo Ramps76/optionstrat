@@ -1,10 +1,10 @@
-f94871f4a16bdfd40ca0cf9490375de3 *DESCRIPTION
+412f04602444ac19cda2b95773c15c01 *DESCRIPTION
 a30002bbf82520df9136a6fc1d917a62 *NAMESPACE
-6d2a223165cf986488c7463e24d8c654 *R/optionstrat.R
+9171d673162f0dc86660df78a2995fde *R/optionstrat.R
 a9d937d605b3733777c328cf4960bf94 *build/vignette.rds
 57cc6609f9ac99623d6b895ac3075c7f *inst/doc/optionstrat_vignette.R
-e9d93ab734c92558b6c2b394b6c7f759 *inst/doc/optionstrat_vignette.Rmd
-f1f202395324349596c062a1598243fe *inst/doc/optionstrat_vignette.html
+00248de904a5f4c57ecdad08f9f895a6 *inst/doc/optionstrat_vignette.Rmd
+3a60b82ce8c8729f95a01d296cc3ffc3 *inst/doc/optionstrat_vignette.html
 d7291d924182d4ae654f707a5c35f76a *man/calldelta.Rd
 73cd9be31aa3905a65f7169b2b9cf249 *man/calleval.Rd
 a498b8490e0e3adbfdf123fbc496bab2 *man/callgreek.Rd
@@ -23,9 +23,9 @@ fb1d4a13e1b999dc2f6fde985f979793 *man/plotbearput.Rd
 0b91f1ebc60a41d05365e4b82006eb3f *man/plotbullput.Rd
 1504a1809e9cf3a7637fd2c97aab23f0 *man/plotdv.Rd
 7b4d262493299c0d6d85105c3af3325e *man/plotvertical.Rd
-0d0cda9a7a703323b71810337ed9a920 *man/prob.above.Rd
-f354a5e85f2b43f671ccacb824f0a8c8 *man/prob.below.Rd
-13ea54c0cf00b4579a84a358bd75fa56 *man/prob.btwn.Rd
+cba41f03b704b6be9d85ed93d63d0bfd *man/prob.above.Rd
+957347ddb8ccc7db7b538f560e2236af *man/prob.below.Rd
+c4d6331ea079c96d1a901c1cc93488a7 *man/prob.btwn.Rd
 52ca1dda641002205aad242da601d89e *man/putdelta.Rd
 545ab032d551dffeb11b329fd8789c51 *man/puteval.Rd
 a379e4688201bbc54ef7f2bf446fd29a *man/putgreek.Rd
@@ -35,4 +35,4 @@ a379e4688201bbc54ef7f2bf446fd29a *man/putgreek.Rd
 a0459fecbf877386b75abf2a8bd03eec *man/r.cont.Rd
 23e32a9d3694ab02fc0f491017177dd1 *man/tdiff.Rd
 a962615e630c92e935edc9836d3bb80e *man/vertical.Rd
-e9d93ab734c92558b6c2b394b6c7f759 *vignettes/optionstrat_vignette.Rmd
+00248de904a5f4c57ecdad08f9f895a6 *vignettes/optionstrat_vignette.Rmd

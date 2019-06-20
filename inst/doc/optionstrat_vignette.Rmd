@@ -190,14 +190,15 @@ The "Probability Below" function has two separate possible operations:
 1. Calculates the probability of the underlying asset value remaining below a price level in a designated time frame, given the daily standard devaiation of the underlying returns.
 2. Calculates the price the asset will remain below, given the designated probability 
 
-- `prob.below(spot, upper, mean = 0, dsd, dte, p, quantile = FALSE)`
+- `prob.below(spot, upper, mean = 0, asd = 0, dsd = 0, dte = 0, p, quantile = FALSE)`
 
 Arguments:
 
 - `spot` Current price of the underlying asset
 - `lower` Lower price of the price range
 - `mean` The average daily price movement, default = 0
-- `dsd` Daily standard deviation of the underlying returns (Annual vol/sqrt(256))
+- `asd` Annualized standard deviation
+- `dsd` Daily standard deviation of the underlying returns (Annual vol/sqrt(256)), used in conjunction with the `dte` parameter as an alternative to the `asd` parameter
 - `dte` Days until expiration, designated time frame
 - `p` Designated probability
 - `quantile` Logical. If True, calculates the price the asset will remain below, given the designated probability
@@ -207,14 +208,15 @@ The "Probability Above" function has two separate possible operations:
 1. Calculates the probability of the underlying asset value remaining above a price level in a designated time frame, given the daily standard devaiation of the underlying returns.
 2. Calculates the price the asset will remain above, given the designated probability
 
-- `prob.above(spot, lower, mean = 0, dsd, dte, p, quantile = FALSE)`
+- `prob.above(spot, lower, mean = 0, asd = 0 ,dsd = 0, dte = 0, p, quantile = FALSE)`
 
 Arguments:
 
 - `spot` Current price of the underlying asset
 - `lower` Lower price of the range
 - `mean` The average daily price movement, default = 0
-- `dsd` Daily standard deviation of the underlying returns (Annual vol/sqrt(256))
+- `asd` Annualized standard deviation
+- `dsd` Daily standard deviation of the underlying returns (Annual vol/sqrt(256)), used in conjunction with the `dte` parameter as an alternative to the `asd` parameter
 - `dte` Days until expiration, designated time frame
 - `p` Designated probability
 - `quantile` Logical. If True, calculates the price the asset will remain above, given the designated probability
@@ -226,7 +228,7 @@ This function has two separate possible operations:
 1. Calculates the probability of the underlying asset value falling between two prices in a designated time frame, given the daily standard devaiation of the underlying returns.
 2. Calculates the probable price range, given a set probability
 
-- `prob.btwn(spot, lower, upper, mean = 0, dsd, dte, p, quantile = FALSE)`
+- `prob.btwn(spot, lower, upper, mean = 0, asd = 0, dsd = 0, dte = 0, p, quantile = FALSE)`
 
 Arguments:
 
@@ -234,7 +236,8 @@ Arguments:
 - `lower` Lower price of the price range
 - `upper` Upper price of the price range
 - `mean` The average daily price movement, default = 0
-- `dsd` Daily standard deviation of the underlying returns (Annual vol/sqrt(256))
+- `asd` Annualized standard deviation
+- `dsd` Daily standard deviation of the underlying returns (Annual vol/sqrt(256)), used in conjunction with the `dte` parameter as an alternative to the `asd` parameter
 - `dte` Days until expiration, designated time frame
 - `p` Designated probability
 - `quantile` Logical. If True, calculates the price the asset will remain above, given the designated probability

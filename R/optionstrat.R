@@ -575,7 +575,8 @@ putgreek <- function(greek = c("delta", "gamma", "theta", "vega", "rho", "premiu
 #' @param lower Lower price of the range
 #' @param upper Upper price of the range
 #' @param mean The average daily price movement, default = 0
-#' @param dsd Daily standard deviation of the underlying returns (Annual vol/sqrt(256))
+#' @param asd Annualized standard deviation of the underlying returns
+#' @param dsd Daily standard deviation of the underlying returns (Annual vol/sqrt(256)), used as an alternative to the asd parameter in conjuction with the dte parameter
 #' @param dte Days until expiration, designated time frame
 #' @param p Designated probability
 #' @param quantile Logical. If True, calculates the probable price range
@@ -588,27 +589,36 @@ putgreek <- function(greek = c("delta", "gamma", "theta", "vega", "rho", "premiu
 #'
 #' @examples prob.btwn(spot = 100, lower = 90, upper = 110, mean = 0, dsd = 0.01, dte = 45)
 #' @examples prob.btwn(spot = 100, mean = 0, dsd = 0.01, dte = 45, p = 0.75, quantile = TRUE)
-prob.btwn <- function(spot, lower, upper, mean = 0, dsd, dte, p, quantile = FALSE) {
+prob.btwn <- function(spot, lower, upper, asd = 0, dsd = 0, dte = 0, mean = 0, p, quantile = FALSE) {
+
+  if(asd == 0 & dsd > 0 & dte > 0){
+    asd <- dsd * sqrt(dte)
+  }else if(asd == 0 & dsd == 0 & dte == 0){
+
+    stop("Please evaluate inputs")
+
+  }
+
 
   if(quantile == TRUE){
 
-    xsd <- dsd * sqrt(dte)
-
-
-    tprob <- c(qnorm(p, mean, dsd * sqrt(dte)), -1 * qnorm(p, mean, dsd * sqrt(dte)))
+    #xsd <- dsd * sqrt(dte)
+    p2 <- (1 - p)/2
+    #1 - qnorm(p, mean, asd)
+    tprob <- c(qnorm(p2, mean, asd), -1 * qnorm(p2, mean, asd))
     data.frame("probability" = p, "percent change" = tprob, "price" = spot * (1+ tprob))
 
 
 
   }else{
 
-    xsd <- dsd * sqrt(dte)
+    #xsd <- dsd * sqrt(dte)
 
     lower.pc <- (lower - spot)/spot
     upper.pc <- (upper - spot)/spot
 
-    plower <- pnorm(lower.pc, mean, xsd)
-    pupper <- pnorm(upper.pc, mean, xsd)
+    plower <- pnorm(lower.pc, mean, asd)
+    pupper <- pnorm(upper.pc, mean, asd)
 
     pupper - plower
   }
@@ -626,7 +636,8 @@ prob.btwn <- function(spot, lower, upper, mean = 0, dsd, dte, p, quantile = FALS
 #' @param spot Current price of the underlying asset
 #' @param upper Upper price of the range
 #' @param mean The average daily price movement, default = 0
-#' @param dsd Daily standard deviation of the underlying returns (Annual vol/sqrt(256))
+#' @param asd Annualized standard deviation of the underlying returns
+#' @param dsd Daily standard deviation of the underlying returns (Annual vol/sqrt(256)), used as an alternative to the asd parameter in conjuction with the dte parameter
 #' @param dte Days until expiration, designated time frame
 #' @param p Designated probability
 #' @param quantile Logical. If True, calculates the price the asset will remain below, given the designated probability
@@ -640,22 +651,30 @@ prob.btwn <- function(spot, lower, upper, mean = 0, dsd, dte, p, quantile = FALS
 #'
 #' @examples prob.below(spot = 100, upper = 110, mean = 0, dsd = 0.01, dte = 45)
 #' @examples prob.below(spot = 100, mean = 0, dsd = 0.01, dte = 45, p = 0.75, quantile = TRUE)
-prob.below <- function(spot, upper, mean = 0, dsd, dte, p, quantile = FALSE) {
+prob.below <- function(spot, upper, mean = 0, asd = 0, dsd = 0, dte = 0, p, quantile = FALSE) {
+
+  if(asd == 0 & dsd > 0 & dte > 0){
+    asd <- dsd * sqrt(dte)
+  }else if(asd > 0){
+
+  }else{
+    stop("Check inputs")
+  }
 
   if(quantile == TRUE){
 
-    xsd <- dsd * sqrt(dte)
 
 
-    tprob <- c(qnorm(p, mean, dsd * sqrt(dte)))
+
+    tprob <- c(qnorm(p, mean, asd))
     data.frame("probability" = p, "percent change" = tprob, "price" = spot * (1+ tprob))
 
   }else{
-    xsd <- dsd * sqrt(dte)
+
 
     upper.pc <- (upper - spot)/spot
 
-    pupper <- pnorm(upper.pc, mean, xsd)
+    pupper <- pnorm(upper.pc, mean, asd)
 
     as.numeric(pupper)
   }
@@ -672,7 +691,8 @@ prob.below <- function(spot, upper, mean = 0, dsd, dte, p, quantile = FALSE) {
 #' @param spot Current price of the underlying asset
 #' @param lower Lower price of the range
 #' @param mean The average daily price movement, default = 0
-#' @param dsd Daily standard deviation of the underlying returns (Annual vol/sqrt(256))
+#' @param asd Annualized standard deviation of the underlying returns
+#' @param dsd Daily standard deviation of the underlying returns (Annual vol/sqrt(256)), used as an alternative to the asd parameter in conjuction with the dte parameter
 #' @param dte Days until expiration, designated time frame
 #' @param p Designated probability
 #' @param quantile Logical. If True, calculates the price the asset will remain above, given the designated probability
@@ -685,22 +705,31 @@ prob.below <- function(spot, upper, mean = 0, dsd, dte, p, quantile = FALSE) {
 #'
 #' @examples prob.above(spot = 100, lower = 110, mean = 0, dsd = 0.01, dte = 45)
 #' @examples prob.above(spot = 100, mean = 0, dsd = 0.01, dte = 45, p = 0.75, quantile = TRUE)
-prob.above <- function(spot, lower, mean = 0, dsd, dte, p, quantile = FALSE) {
+prob.above <- function(spot, lower, mean = 0, asd = 0, dsd = 0, dte = 0, p, quantile = FALSE) {
+
+  if(asd == 0 & dsd > 0 & dte > 0){
+    asd <- dsd * sqrt(dte)
+  }else if(asd > 0){
+
+  }else{
+    stop("Check inputs")
+  }
+
 
   if(quantile == TRUE){
 
-    xsd <- dsd * sqrt(dte)
+    #xsd <- dsd * sqrt(dte)
 
 
-    tprob <- c(-1 * qnorm(p, mean, dsd * sqrt(dte)))
+    tprob <- c(-1 * qnorm(p, mean, asd))
     data.frame("probability" = p, "percent change" = tprob, "price" = spot * (1+ tprob))
   }else {
 
-    xsd <- dsd * sqrt(dte)
+    #xsd <- dsd * sqrt(dte)
 
     lower.pc <- (lower - spot)/spot
 
-    plower <- pnorm(lower.pc, 0, xsd)
+    plower <- pnorm(lower.pc, mean, asd)
 
     1 - as.numeric(plower)
   }

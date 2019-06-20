@@ -12,7 +12,7 @@
 
 <meta name="author" content="John T. Buynak" />
 
-<meta name="date" content="2019-05-07" />
+<meta name="date" content="2019-06-20" />
 
 <title>Optionstrat</title>
 
@@ -32,7 +32,7 @@
 
 <h1 class="title toc-ignore">Optionstrat</h1>
 <h4 class="author"><em>John T. Buynak</em></h4>
-<h4 class="date"><em>2019-05-07</em></h4>
+<h4 class="date"><em>2019-06-20</em></h4>
 
 
 
@@ -208,14 +208,15 @@
 <li>Calculates the price the asset will remain below, given the designated probability</li>
 </ol>
 <ul>
-<li><code>prob.below(spot, upper, mean = 0, dsd, dte, p, quantile = FALSE)</code></li>
+<li><code>prob.below(spot, upper, mean = 0, asd = 0, dsd = 0, dte = 0, p, quantile = FALSE)</code></li>
 </ul>
 <p>Arguments:</p>
 <ul>
 <li><code>spot</code> Current price of the underlying asset</li>
 <li><code>lower</code> Lower price of the price range</li>
 <li><code>mean</code> The average daily price movement, default = 0</li>
-<li><code>dsd</code> Daily standard deviation of the underlying returns (Annual vol/sqrt(256))</li>
+<li><code>asd</code> Annualized standard deviation</li>
+<li><code>dsd</code> Daily standard deviation of the underlying returns (Annual vol/sqrt(256)), used in conjunction with the <code>dte</code> parameter as an alternative to the <code>asd</code> parameter</li>
 <li><code>dte</code> Days until expiration, designated time frame</li>
 <li><code>p</code> Designated probability</li>
 <li><code>quantile</code> Logical. If True, calculates the price the asset will remain below, given the designated probability</li>
@@ -226,14 +227,15 @@
 <li>Calculates the price the asset will remain above, given the designated probability</li>
 </ol>
 <ul>
-<li><code>prob.above(spot, lower, mean = 0, dsd, dte, p, quantile = FALSE)</code></li>
+<li><code>prob.above(spot, lower, mean = 0, asd = 0 ,dsd = 0, dte = 0, p, quantile = FALSE)</code></li>
 </ul>
 <p>Arguments:</p>
 <ul>
 <li><code>spot</code> Current price of the underlying asset</li>
 <li><code>lower</code> Lower price of the range</li>
 <li><code>mean</code> The average daily price movement, default = 0</li>
-<li><code>dsd</code> Daily standard deviation of the underlying returns (Annual vol/sqrt(256))</li>
+<li><code>asd</code> Annualized standard deviation</li>
+<li><code>dsd</code> Daily standard deviation of the underlying returns (Annual vol/sqrt(256)), used in conjunction with the <code>dte</code> parameter as an alternative to the <code>asd</code> parameter</li>
 <li><code>dte</code> Days until expiration, designated time frame</li>
 <li><code>p</code> Designated probability</li>
 <li><code>quantile</code> Logical. If True, calculates the price the asset will remain above, given the designated probability</li>
@@ -245,7 +247,7 @@
 <li>Calculates the probable price range, given a set probability</li>
 </ol>
 <ul>
-<li><code>prob.btwn(spot, lower, upper, mean = 0, dsd, dte, p, quantile = FALSE)</code></li>
+<li><code>prob.btwn(spot, lower, upper, mean = 0, asd = 0, dsd = 0, dte = 0, p, quantile = FALSE)</code></li>
 </ul>
 <p>Arguments:</p>
 <ul>
@@ -253,7 +255,8 @@
 <li><code>lower</code> Lower price of the price range</li>
 <li><code>upper</code> Upper price of the price range</li>
 <li><code>mean</code> The average daily price movement, default = 0</li>
-<li><code>dsd</code> Daily standard deviation of the underlying returns (Annual vol/sqrt(256))</li>
+<li><code>asd</code> Annualized standard deviation</li>
+<li><code>dsd</code> Daily standard deviation of the underlying returns (Annual vol/sqrt(256)), used in conjunction with the <code>dte</code> parameter as an alternative to the <code>asd</code> parameter</li>
 <li><code>dte</code> Days until expiration, designated time frame</li>
 <li><code>p</code> Designated probability</li>
 <li><code>quantile</code> Logical. If True, calculates the price the asset will remain above, given the designated probability</li>
