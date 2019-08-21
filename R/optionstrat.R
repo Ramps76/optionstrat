@@ -791,6 +791,7 @@ r.cont <- function(r, n) {
 #' @param xlab X-Axis Label
 #' @param ylab Y-Axis Label
 #' @param main Title of the plot
+#' @param ... Additional plot parameters
 #'
 #' @return Returns a plot of a vertical call spread (debit spread).
 #' Black line: The profit(loss) at expiration.
@@ -807,7 +808,7 @@ r.cont <- function(r, n) {
 #' @examples plotbullcall(s= 100, x1 = 95, x2 = 105, t = (45/365), r = 0.02,
 #' sigma = 0.20, sigma2 = 0.20, d = 0, ll = 0.75, ul = 1.25)
 plotbullcall <- function(s, x1, x2, t, r, sigma, sigma2 = sigma, d = 0, ll = 0.75, ul=1.25,
-                         xlab = "spot", ylab = "profit/loss", main = "Bull Call Spread") {
+                         xlab = "spot", ylab = "profit/loss", main = "Bull Call Spread", ...) {
   ttm <- t
   if(t == 0){
     ttm <- 1e-200
@@ -832,7 +833,7 @@ plotbullcall <- function(s, x1, x2, t, r, sigma, sigma2 = sigma, d = 0, ll = 0.7
                      callpremium(s, x2, sigma2, t, r))
 
   par(mfrow = c(1,1))
-  plot(bullcall$spot, bullcall$bce, type = "l", xlab = xlab, ylab = ylab, main = main) # first plot
+  plot(bullcall$spot, bullcall$bce, type = "l", xlab = xlab, ylab = ylab, main = main, ...)
   abline("h" = 0)
   abline("v" = s)
   lines(bullcall$spot, bullcall$bct0.5, col = "red")
@@ -858,6 +859,7 @@ plotbullcall <- function(s, x1, x2, t, r, sigma, sigma2 = sigma, d = 0, ll = 0.7
 #' @param xlab X-Axis Label
 #' @param ylab Y-Axis Label
 #' @param main Title of the plot
+#' @param ... Additional plot parameters
 #'
 #' @return Returns a plot of a vertical call spread (credit spread).
 #' Black line: The profit(loss) at expiration.
@@ -874,7 +876,7 @@ plotbullcall <- function(s, x1, x2, t, r, sigma, sigma2 = sigma, d = 0, ll = 0.7
 #' @examples plotbearcall(s= 100, x1 = 95, x2 = 105, t = (45/365), r = 0.02,
 #' sigma = 0.20, sigma2 = 0.20, d = 0, ll = 0.75, ul = 1.25)
 plotbearcall <- function(s, x1, x2, t, r, sigma, sigma2 = sigma,  d = 0, ll = 0.75, ul=1.25,
-                         xlab = "spot", ylab = "Profit/Loss", main = "Bear Call Spread") {
+                         xlab = "spot", ylab = "Profit/Loss", main = "Bear Call Spread", ...) {
   ttm <- t
   if(t == 0){
     ttm <- 1e-200
@@ -899,7 +901,7 @@ plotbearcall <- function(s, x1, x2, t, r, sigma, sigma2 = sigma,  d = 0, ll = 0.
                      callpremium(s, x1, sigma, t, r))
 
   par(mfrow = c(1,1))
-  plot(bearcall$spot, bearcall$bce, type = "l", xlab = xlab, ylab = ylab, main = main) # first plot
+  plot(bearcall$spot, bearcall$bce, type = "l", xlab = xlab, ylab = ylab, main = main, ...) # first plot
   abline("h" = 0)
   abline("v" = s)
   lines(bearcall$spot, bearcall$bct0.5, col = "red")
@@ -925,6 +927,7 @@ plotbearcall <- function(s, x1, x2, t, r, sigma, sigma2 = sigma,  d = 0, ll = 0.
 #' @param xlab X-Axis Label
 #' @param ylab Y-Axis Label
 #' @param main Title of the plot
+#' @param ... Additional plot parameters
 #'
 #' @return Returns a plot of a vertical put spread (credit spread).
 #' Black line: The profit(loss) at expiration.
@@ -941,7 +944,7 @@ plotbearcall <- function(s, x1, x2, t, r, sigma, sigma2 = sigma,  d = 0, ll = 0.
 #' @examples plotbullput(s= 100, x1 = 95, x2 = 105, t = (45/365), r = 0.02,
 #' sigma = 0.20, sigma2 = 0.20, d = 0, ll = 0.75, ul = 1.25)
 plotbullput <- function(s, x1, x2, t, r, d = 0, sigma, sigma2 = sigma, ll = 0.75, ul = 1.25,
-                        xlab = "spot", ylab = "Profit/Loss", main = "Bull Put Spread") {
+                        xlab = "spot", ylab = "Profit/Loss", main = "Bull Put Spread", ...) {
   ttm <- t
   if(t == 0){
     ttm <- 1e-200
@@ -966,7 +969,7 @@ plotbullput <- function(s, x1, x2, t, r, d = 0, sigma, sigma2 = sigma, ll = 0.75
                     putpremium(s, x2, sigma2, t, r))
 
   par(mfrow = c(1,1))
-  plot(bullput$spot, bullput$bce, type = "l", xlab = xlab, ylab = ylab, main = main) # first plot
+  plot(bullput$spot, bullput$bce, type = "l", xlab = xlab, ylab = ylab, main = main, ...) # first plot
   abline("h" = 0)
   abline("v" = s)
   lines(bullput$spot, bullput$bct0.5, col = "red")
@@ -992,6 +995,7 @@ plotbullput <- function(s, x1, x2, t, r, d = 0, sigma, sigma2 = sigma, ll = 0.75
 #' @param xlab X-Axis Label
 #' @param ylab Y-Axis Label
 #' @param main Title of the plot
+#' @param ... Additional plot parameters
 #'
 #' @return Returns a plot of a vertical put spread (debit spread).
 #' Black line: The profit(loss) at expiration.
@@ -1008,7 +1012,7 @@ plotbullput <- function(s, x1, x2, t, r, d = 0, sigma, sigma2 = sigma, ll = 0.75
 #' @examples plotbearput(s= 100, x1 = 95, x2 = 105, t = (45/365), r = 0.02,
 #' sigma = 0.20, sigma2 = 0.20, d = 0, ll = 0.75, ul = 1.25)
 plotbearput <- function(s, x1, x2, t, r, sigma, sigma2 = sigma, d = 0, ll = 0.75, ul = 1.25,
-                        xlab = "spot", ylab = "Profit/Loss", main = "Bear Put Spread") {
+                        xlab = "spot", ylab = "Profit/Loss", main = "Bear Put Spread", ...) {
   ttm <- t
   if(t == 0){
     ttm <- 1e-200
@@ -1033,7 +1037,7 @@ plotbearput <- function(s, x1, x2, t, r, sigma, sigma2 = sigma, d = 0, ll = 0.75
                     putpremium(s, x1, sigma, t, r))
 
   par(mfrow = c(1,1))
-  plot(bearput$spot, bearput$bce, type = "l", xlab = xlab, ylab = ylab, main = main) # first plot
+  plot(bearput$spot, bearput$bce, type = "l", xlab = xlab, ylab = ylab, main = main, ...) # first plot
   abline("h" = 0)
   abline("v" = s)
   lines(bearput$spot, bearput$bct0.5, col = "red")
@@ -1065,6 +1069,7 @@ plotbearput <- function(s, x1, x2, t, r, sigma, sigma2 = sigma, d = 0, ll = 0.75
 #' @param xlab X-Axis Label
 #' @param ylab Y-Axis Label
 #' @param main Title of the plot
+#' @param ... Additional plot parameters
 #'
 #' @return Returns a plot of a double vertical spread (credit spread).
 #' Black line: The profit(loss) at expiration.
@@ -1081,7 +1086,7 @@ plotbearput <- function(s, x1, x2, t, r, sigma, sigma2 = sigma, d = 0, ll = 0.75
 #' @examples plotdv(s= 100, x1 = 90, x2 = 95, x3 = 105, x4 = 110, t = (45/365), r = 0.02, sigma = 0.20)
 plotdv <- function(s, x1, x2, x3, x4, t, r, sigma, sigma2 = sigma, sigma3 = sigma, sigma4 =sigma,
                    d = 0, ll = 0.75, ul = 1.25,
-                   xlab = "spot", ylab = "Profit/Loss", main = "Double Vertical Spread") {
+                   xlab = "spot", ylab = "Profit/Loss", main = "Double Vertical Spread", ...) {
 
   ttm <- t
   if(t == 0){
@@ -1122,7 +1127,7 @@ plotdv <- function(s, x1, x2, x3, x4, t, r, sigma, sigma2 = sigma, sigma3 = sigm
 
 
   par(mfrow = c(1,1))
-  plot(dv$spot, dv$sume, type = "l", xlab = xlab, ylab = ylab, main = main) # first plot
+  plot(dv$spot, dv$sume, type = "l", xlab = xlab, ylab = ylab, main = main, ...) # first plot
   abline("h" = 0)
   abline("v" = s)
   lines(dv$spot, dv$sumt0.5, col = "red")
@@ -1148,6 +1153,7 @@ plotdv <- function(s, x1, x2, x3, x4, t, r, sigma, sigma2 = sigma, sigma3 = sigm
 #' @param xlab X-Axis Label
 #' @param ylab Y-Axis Label
 #' @param main Title of the plot
+#' @param ... Additional plot parameters
 #'
 #' @return Returns a plot of a custom vertical spread.
 #' Black line: The profit(loss) at expiration.
@@ -1164,7 +1170,7 @@ plotdv <- function(s, x1, x2, x3, x4, t, r, sigma, sigma2 = sigma, sigma3 = sigm
 #' @examples plotvertical("call", 100, 90, 110, (45/365), 0.02, 0.20)
 plotvertical <- function(options = c("call", "put"), s, x1, x2,
                          t, r, sigma, sigma2 = sigma, d = 0, ll = 0.75, ul = 1.25,
-                         xlab = "spot", ylab = "profit/loss", main = "Vertical Spread") {
+                         xlab = "spot", ylab = "profit/loss", main = "Vertical Spread", ...) {
   ttm <- t
   if(t == 0){
     ttm <- 1e-200
@@ -1220,7 +1226,7 @@ plotvertical <- function(options = c("call", "put"), s, x1, x2,
     }
   }
   par(mfrow = c(1,1))
-  plot(vert$spot, vert$exp, type = "l", xlab = xlab, ylab = ylab, main = main) # first plot
+  plot(vert$spot, vert$exp, type = "l", xlab = xlab, ylab = ylab, main = main, ...) # first plot
   abline("h" = 0)
   abline("v" = s)
   lines(vert$spot, vert$half, col = "red")
@@ -1428,7 +1434,7 @@ iv.calc <- function(type, price, s, x, t, r, d=0) {
 
 
 
-  volchart <- data.frame(vol = seq(0, 3, 0.001))
+  volchart <- data.frame(vol = seq(0, 5, 0.001))
   volchart$distance <- dvol(type, price, volchart$vol)
 
 

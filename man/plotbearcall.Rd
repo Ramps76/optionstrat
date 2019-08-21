@@ -6,7 +6,7 @@
 \usage{
 plotbearcall(s, x1, x2, t, r, sigma, sigma2 = sigma, d = 0,
   ll = 0.75, ul = 1.25, xlab = "spot", ylab = "Profit/Loss",
-  main = "Bear Call Spread")
+  main = "Bear Call Spread", ...)
 }
 \arguments{
 \item{s}{Spot price of the underlying asset}
@@ -34,6 +34,8 @@ plotbearcall(s, x1, x2, t, r, sigma, sigma2 = sigma, d = 0,
 \item{ylab}{Y-Axis Label}
 
 \item{main}{Title of the plot}
+
+\item{...}{Additional plot parameters}
 }
 \value{
 Returns a plot of a vertical call spread (credit spread).

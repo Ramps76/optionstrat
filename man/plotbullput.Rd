@@ -6,7 +6,7 @@
 \usage{
 plotbullput(s, x1, x2, t, r, d = 0, sigma, sigma2 = sigma, ll = 0.75,
   ul = 1.25, xlab = "spot", ylab = "Profit/Loss",
-  main = "Bull Put Spread")
+  main = "Bull Put Spread", ...)
 }
 \arguments{
 \item{s}{Spot price of the underlying asset}
@@ -34,6 +34,8 @@ plotbullput(s, x1, x2, t, r, d = 0, sigma, sigma2 = sigma, ll = 0.75,
 \item{ylab}{Y-Axis Label}
 
 \item{main}{Title of the plot}
+
+\item{...}{Additional plot parameters}
 }
 \value{
 Returns a plot of a vertical put spread (credit spread).

@@ -6,7 +6,7 @@
 \usage{
 plotvertical(options = c("call", "put"), s, x1, x2, t, r, sigma,
   sigma2 = sigma, d = 0, ll = 0.75, ul = 1.25, xlab = "spot",
-  ylab = "profit/loss", main = "Vertical Spread")
+  ylab = "profit/loss", main = "Vertical Spread", ...)
 }
 \arguments{
 \item{options}{String argument, either "call" or "put"}
@@ -36,6 +36,8 @@ plotvertical(options = c("call", "put"), s, x1, x2, t, r, sigma,
 \item{ylab}{Y-Axis Label}
 
 \item{main}{Title of the plot}
+
+\item{...}{Additional plot parameters}
 }
 \value{
 Returns a plot of a custom vertical spread.

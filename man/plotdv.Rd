@@ -6,7 +6,7 @@
 \usage{
 plotdv(s, x1, x2, x3, x4, t, r, sigma, sigma2 = sigma, sigma3 = sigma,
   sigma4 = sigma, d = 0, ll = 0.75, ul = 1.25, xlab = "spot",
-  ylab = "Profit/Loss", main = "Double Vertical Spread")
+  ylab = "Profit/Loss", main = "Double Vertical Spread", ...)
 }
 \arguments{
 \item{s}{Spot price of the underlying asset}
@@ -42,6 +42,8 @@ plotdv(s, x1, x2, x3, x4, t, r, sigma, sigma2 = sigma, sigma3 = sigma,
 \item{ylab}{Y-Axis Label}
 
 \item{main}{Title of the plot}
+
+\item{...}{Additional plot parameters}
 }
 \value{
 Returns a plot of a double vertical spread (credit spread).
