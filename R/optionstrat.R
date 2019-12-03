@@ -580,6 +580,7 @@ putgreek <- function(greek = c("delta", "gamma", "theta", "vega", "rho", "premiu
 #' @param dte Days until expiration, designated time frame
 #' @param p Designated probability
 #' @param quantile Logical. If True, calculates the probable price range
+#' @param tradedays Number of trade days in a year, default = 262
 #'
 #' @return Returns a probability (if quantile = FALSE), Returns a data.frame (if quantile = TRUE)
 #' @export
@@ -589,9 +590,13 @@ putgreek <- function(greek = c("delta", "gamma", "theta", "vega", "rho", "premiu
 #'
 #' @examples prob.btwn(spot = 100, lower = 90, upper = 110, mean = 0, dsd = 0.01, dte = 45)
 #' @examples prob.btwn(spot = 100, mean = 0, dsd = 0.01, dte = 45, p = 0.75, quantile = TRUE)
-prob.btwn <- function(spot, lower, upper, asd = 0, dsd = 0, dte = 0, mean = 0, p, quantile = FALSE) {
+prob.btwn <- function(spot, lower, upper, asd = 0, dsd = 0, dte = 0, mean = 0, p, quantile = FALSE, tradedays = 262) {
 
-  if(asd == 0 & dsd > 0 & dte > 0){
+
+  if(dsd == 0 & asd > 0 ){
+    dsd <- asd/sqrt(tradedays)
+    asd <- dsd * sqrt(dte)
+  }else if(asd == 0 & dsd > 0 & dte > 0){
     asd <- dsd * sqrt(dte)
   }else if(asd == 0 & dsd == 0 & dte == 0){
 
@@ -641,6 +646,7 @@ prob.btwn <- function(spot, lower, upper, asd = 0, dsd = 0, dte = 0, mean = 0, p
 #' @param dte Days until expiration, designated time frame
 #' @param p Designated probability
 #' @param quantile Logical. If True, calculates the price the asset will remain below, given the designated probability
+#' @param tradedays Number of trade days in a year, default = 262
 #'
 #'
 #' @return Returns a probability (if quantile = FALSE), Returns a data.frame (if quantile = TRUE)
@@ -651,14 +657,17 @@ prob.btwn <- function(spot, lower, upper, asd = 0, dsd = 0, dte = 0, mean = 0, p
 #'
 #' @examples prob.below(spot = 100, upper = 110, mean = 0, dsd = 0.01, dte = 45)
 #' @examples prob.below(spot = 100, mean = 0, dsd = 0.01, dte = 45, p = 0.75, quantile = TRUE)
-prob.below <- function(spot, upper, mean = 0, asd = 0, dsd = 0, dte = 0, p, quantile = FALSE) {
+prob.below <- function(spot, upper, mean = 0, asd = 0, dsd = 0, dte = 0, p, quantile = FALSE, tradedays = 262) {
 
-  if(asd == 0 & dsd > 0 & dte > 0){
+  if(dsd == 0 & asd > 0 ){
+    dsd <- asd/sqrt(tradedays)
     asd <- dsd * sqrt(dte)
-  }else if(asd > 0){
+  }else if(asd == 0 & dsd > 0 & dte > 0){
+    asd <- dsd * sqrt(dte)
+  }else if(asd == 0 & dsd == 0 & dte == 0){
 
-  }else{
-    stop("Check inputs")
+    stop("Please evaluate inputs")
+
   }
 
   if(quantile == TRUE){
@@ -696,6 +705,7 @@ prob.below <- function(spot, upper, mean = 0, asd = 0, dsd = 0, dte = 0, p, quan
 #' @param dte Days until expiration, designated time frame
 #' @param p Designated probability
 #' @param quantile Logical. If True, calculates the price the asset will remain above, given the designated probability
+#' @param tradedays Number of trade days in a year, default = 262
 #'
 #' @return Returns a probability (if quantile = FALSE), Returns a data.frame (if quantile = TRUE)
 #' @export
@@ -705,14 +715,17 @@ prob.below <- function(spot, upper, mean = 0, asd = 0, dsd = 0, dte = 0, p, quan
 #'
 #' @examples prob.above(spot = 100, lower = 110, mean = 0, dsd = 0.01, dte = 45)
 #' @examples prob.above(spot = 100, mean = 0, dsd = 0.01, dte = 45, p = 0.75, quantile = TRUE)
-prob.above <- function(spot, lower, mean = 0, asd = 0, dsd = 0, dte = 0, p, quantile = FALSE) {
+prob.above <- function(spot, lower, mean = 0, asd = 0, dsd = 0, dte = 0, p, quantile = FALSE, tradedays = 262) {
 
-  if(asd == 0 & dsd > 0 & dte > 0){
+  if(dsd == 0 & asd > 0 ){
+    dsd <- asd/sqrt(tradedays)
     asd <- dsd * sqrt(dte)
-  }else if(asd > 0){
+  }else if(asd == 0 & dsd > 0 & dte > 0){
+    asd <- dsd * sqrt(dte)
+  }else if(asd == 0 & dsd == 0 & dte == 0){
 
-  }else{
-    stop("Check inputs")
+    stop("Please evaluate inputs")
+
   }
 
 

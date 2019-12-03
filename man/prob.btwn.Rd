@@ -5,7 +5,7 @@
 \title{Probability Between}
 \usage{
 prob.btwn(spot, lower, upper, asd = 0, dsd = 0, dte = 0, mean = 0,
-  p, quantile = FALSE)
+  p, quantile = FALSE, tradedays = 262)
 }
 \arguments{
 \item{spot}{Current price of the underlying asset}
@@ -25,6 +25,8 @@ prob.btwn(spot, lower, upper, asd = 0, dsd = 0, dte = 0, mean = 0,
 \item{p}{Designated probability}
 
 \item{quantile}{Logical. If True, calculates the probable price range}
+
+\item{tradedays}{Number of trade days in a year, default = 262}
 }
 \value{
 Returns a probability (if quantile = FALSE), Returns a data.frame (if quantile = TRUE)

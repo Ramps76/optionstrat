@@ -5,7 +5,7 @@
 \title{Probability Below}
 \usage{
 prob.below(spot, upper, mean = 0, asd = 0, dsd = 0, dte = 0, p,
-  quantile = FALSE)
+  quantile = FALSE, tradedays = 262)
 }
 \arguments{
 \item{spot}{Current price of the underlying asset}
@@ -23,6 +23,8 @@ prob.below(spot, upper, mean = 0, asd = 0, dsd = 0, dte = 0, p,
 \item{p}{Designated probability}
 
 \item{quantile}{Logical. If True, calculates the price the asset will remain below, given the designated probability}
+
+\item{tradedays}{Number of trade days in a year, default = 262}
 }
 \value{
 Returns a probability (if quantile = FALSE), Returns a data.frame (if quantile = TRUE)
